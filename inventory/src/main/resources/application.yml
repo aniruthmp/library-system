@@ -1,0 +1,29 @@
+management:
+  endpoints:
+    enabled-by-default: true
+    web:
+      exposure:
+        include: "*"
+    jmx:
+      exposure:
+        include: "*"
+
+logging:
+  level:
+    root: INFO
+    org.springframework: INFO
+    io.pivotal.inventory: DEBUG
+
+spring:
+  profiles:
+    active: local
+
+---
+
+spring:
+  profiles: local
+  data:
+    mongodb:
+      database: reactive
+      host: localhost
+      port: 27017
