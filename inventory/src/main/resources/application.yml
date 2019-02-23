@@ -17,13 +17,21 @@ logging:
 spring:
   profiles:
     active: local
+  datasource:
+    url: jdbc:postgresql://localhost:5433/eCommerce-inventory
+    username: inventory-user
+    password: inventory123
+  jpa:
+    properties.hibernate:
+      dialect: org.hibernate.dialect.PostgreSQLDialect
+      jdbc.lob.non_contextual_creation: true
+    hibernate:
+      ddl-auto: update
+    show-sql: false
 
 ---
 
 spring:
-  profiles: local
-  data:
-    mongodb:
-      database: reactive
-      host: localhost
-      port: 27017
+  profiles: windows
+  datasource:
+    url: jdbc:postgresql://localhost:5432/eCommerce-inventory

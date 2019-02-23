@@ -1,16 +1,13 @@
 package io.pivotal.inventory.repository;
 
 import io.pivotal.inventory.domain.Book;
-import org.springframework.data.mongodb.repository.Query;
-import org.springframework.data.repository.reactive.ReactiveCrudRepository;
-import org.springframework.stereotype.Repository;
-import reactor.core.publisher.Flux;
-import reactor.core.publisher.Mono;
+import org.springframework.data.repository.PagingAndSortingRepository;
+import org.springframework.data.rest.webmvc.RepositoryRestController;
 
-@Repository
-public interface BookRepository extends ReactiveCrudRepository<Book, String> {
-    Flux<Book> findByPublisher(Mono<String> publisher);
+import java.util.Optional;
 
-    @Query("{ 'author': ?0}")
-    Mono<Book> findByAuthor(Mono<String> author);
+@RepositoryRestController
+public interface BookRepository extends PagingAndSortingRepository<Book, Long> {
+    Optional<Book> findBookByUuid(String uuid);
+    void deleteBookByUuid(String uuid);
 }

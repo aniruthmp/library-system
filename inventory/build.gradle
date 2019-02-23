@@ -1,6 +1,6 @@
 buildscript {
 	ext {
-		springBootVersion = '2.0.0.RELEASE'
+		springBootVersion = '2.1.3.RELEASE'
 	}
 	repositories {
 		mavenCentral()
@@ -17,39 +17,34 @@ apply plugin: 'io.spring.dependency-management'
 
 group = 'io.pivotal'
 version = '0.0.1-SNAPSHOT'
-sourceCompatibility = 1.8
 
 repositories {
 	mavenCentral()
-    mavenLocal()
 	maven { url "https://repo.spring.io/milestone" }
 }
 
-
 ext {
-	springCloudVersion = 'Finchley.M8'
+	set('springCloudServicesVersion', '2.1.0.RELEASE')
+	set('springCloudVersion', 'Greenwich.RELEASE')
 }
 
+
 dependencies {
-	compile('org.springframework.boot:spring-boot-starter-actuator')
-//	compile('org.springframework.boot:spring-boot-starter-amqp')
-	compile('org.springframework.boot:spring-boot-starter-data-mongodb-reactive')
-    compile group: 'org.springframework.boot', name: 'spring-boot-starter-data-jpa'
-	compile('org.springframework.boot:spring-boot-starter-webflux')
-	compile('org.springframework.cloud:spring-cloud-starter-sleuth')
-	compile('org.springframework.data:spring-data-rest-hal-browser')
-    compile 'com.google.guava:guava:24.0-jre'
-    compile 'com.google.code.gson:gson:2.8.2'
-    compile 'io.pivotal:common:0.0.1'
-    compile('com.h2database:h2')
-	compileOnly('org.projectlombok:lombok')
-	testCompile('org.springframework.boot:spring-boot-starter-test')
-	testCompile('io.projectreactor:reactor-test')
-	testCompile('org.springframework.restdocs:spring-restdocs-mockmvc')
+	implementation 'org.springframework.boot:spring-boot-starter-actuator'
+	implementation 'org.springframework.boot:spring-boot-starter-data-rest'
+	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+	implementation 'org.springframework.boot:spring-boot-starter-web'
+	compileOnly 'com.google.guava:guava:27.0.1-jre'
+	compileOnly 'com.google.code.gson:gson:2.8.5'
+	compileOnly 'org.projectlombok:lombok'
+	implementation 'org.springframework.cloud:spring-cloud-starter-sleuth'
+	runtimeOnly 'org.postgresql:postgresql'
+	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 }
 
 dependencyManagement {
 	imports {
+		mavenBom "io.pivotal.spring.cloud:spring-cloud-services-dependencies:${springCloudServicesVersion}"
 		mavenBom "org.springframework.cloud:spring-cloud-dependencies:${springCloudVersion}"
 	}
 }

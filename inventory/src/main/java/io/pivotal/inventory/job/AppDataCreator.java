@@ -10,7 +10,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 import org.springframework.util.CollectionUtils;
-import reactor.core.publisher.Mono;
 
 import java.io.InputStreamReader;
 import java.io.Reader;
@@ -36,11 +35,12 @@ public class AppDataCreator implements CommandLineRunner {
                     this.getClass().getResourceAsStream("/books.json"), "UTF-8");
             List<Book> bookList = Arrays.asList(gson.fromJson(reader, Book[].class));
 
-            if(!CollectionUtils.isEmpty(bookList)){
+            if (!CollectionUtils.isEmpty(bookList)) {
                 log.debug("No. of records read from the books.json : " + bookList.size());
-                bookRepository.saveAll(bookList).subscribe();
-                Mono<Long> bookCount = bookRepository.count();
-                log.info("Total booked inserted : " + bookCount.block());
+                bookList.forEach(book -> {
+                    bookRepository.save(book);
+                });
+                log.info("Total booked inserted : " + bookRepository.count());
             } else {
                 log.warn("Got empty book list");
             }
