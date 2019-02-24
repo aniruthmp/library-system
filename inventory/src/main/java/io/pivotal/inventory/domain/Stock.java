@@ -6,28 +6,18 @@ import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
-import java.util.Date;
+import java.sql.Date;
 
 @Data
 @Entity
 @EntityListeners(AuditingEntityListener.class)
-public class Book {
+public class Stock {
 
     @Id
     @GeneratedValue
     private Long id;
     private String uuid;
-    private String isbn;
-    private String title;
-    private String author;
-    private float price;
-    private String publisher;
-    private Date published;
-    private short pages;
-    @Column(length = 2500)
-    private String description;
-    private String email;
-    private boolean isActive;
+    private short availableCount;
     @Column(nullable = false, updatable = false)
     @CreatedDate
     private long createdDate;
